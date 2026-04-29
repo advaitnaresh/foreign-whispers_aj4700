@@ -201,3 +201,5 @@ whisper_models/
 
 # Verification screenshots (transient)
 *-verify.png
+.DS_Store
+**/.DS_Store

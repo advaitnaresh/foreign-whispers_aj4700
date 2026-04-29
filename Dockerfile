@@ -22,6 +22,14 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Install dependencies as root, then hand ownership to appuser
 WORKDIR /app
 COPY --chown=$USERNAME:$USERNAME pyproject.toml uv.lock ./
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+    
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-install-project && \
     chown -R $USERNAME:$USERNAME /app
